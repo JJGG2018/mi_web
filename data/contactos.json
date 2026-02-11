@@ -1,0 +1,12 @@
+[
+  {
+    "nombre": "Javier",
+    "email": "jgalilea@outlook.com",
+    "mensaje": "sdflasoósj ´poéptroi çapwoeir ´paweoirpaweori+p0aw i"
+  },
+  {
+    "nombre": "Javier",
+    "email": "jgalilea@outlook.com",
+    "mensaje": "Por qué esto es mejor:\r\nunwrap_or_else: Si por alguna razón el archivo no se puede leer, no se detiene el servidor; simplemente asume que no hay contactos.\r\nunwrap_or_default(): Esta es la clave. Si el JSON está vacío (tu caso actual), en lugar de dar error, te devuelve un Vec vacío ([]). Para que esto funcione, necesitamos asegurarnos de que la estructura \r\nContacto\r\n (o el Vec) pueda generar un valor por defecto, lo cual ya hace Vec automáticamente."
+  }
+]

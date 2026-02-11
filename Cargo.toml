@@ -1,0 +1,18 @@
+[package]
+name = "mi_web"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+axum = "0.7"
+serde = { version = "1", features = ["derive"] }
+tokio = { version = "1", features = ["full"] }
+tower = "0.5"
+tower-http = { version = "0.5", features = ["fs"] }
+serde_json = "1"
+shuttle-runtime = { version = "0.57.0", optional = true }
+shuttle-axum = { version = "0.57.0", optional = true }
+
+[features]
+default = []
+shuttle = ["shuttle-runtime", "shuttle-axum"]

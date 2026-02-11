@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mi Portfolio</title>
+
+<!-- Bootstrap 5 -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+    body {
+        scroll-behavior: smooth;
+    }
+    header {
+        background: linear-gradient(135deg, #2a4b8d, #5d86d9);
+        color: white;
+        padding: 6rem 1rem;
+        text-align: center;
+    }
+    .profile-img {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid white;
+        margin-bottom: 1rem;
+    }
+    .project-card:hover {
+        transform: translateY(-5px);
+        transition: 0.3s ease;
+    }
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="#">Mi Portfolio</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="#sobre-mi">Sobre mí</a></li>
+        <li class="nav-item"><a class="nav-link" href="#proyectos">Proyectos</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- HEADER -->
+<header>
+    <img src="/static/perfil.jpg" alt="Foto de perfil" class="profile-img">
+    <h1>Javier</h1>
+    <p>Desarrollador · Rust · Web · Backend</p>
+</header>
+
+<!-- SOBRE MÍ -->
+<section id="sobre-mi" class="container py-5">
+    <h2 class="text-center mb-4">Sobre mí</h2>
+    <p class="text-center">
+        Soy un desarrollador apasionado por Rust, el desarrollo backend y crear herramientas eficientes.
+        Me encanta aprender tecnologías nuevas, experimentar con proyectos personales y mejorar cada día.
+    </p>
+</section>
+
+<!-- PROYECTOS -->
+<section id="proyectos" class="container py-5">
+    <h2 class="text-center mb-4">Proyectos</h2>
+
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card project-card shadow">
+                <img src="https://picsum.photos/500/300?random=1" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">Proyecto 1</h5>
+                    <p class="card-text">Descripción breve del proyecto.</p>
+                    <a class="btn btn-primary" href="#">Ver más</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card project-card shadow">
+                <img src="https://picsum.photos/500/300?random=2" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">Proyecto 2</h5>
+                    <p class="card-text">Descripción breve del proyecto.</p>
+                    <a class="btn btn-primary" href="#">Ver más</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card project-card shadow">
+                <img src="https://picsum.photos/500/300?random=3" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">Proyecto 3</h5>
+                    <p class="card-text">Descripción breve del proyecto.</p>
+                    <a class="btn btn-primary" href="#">Ver más</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto" class="container py-5">
+  <h2 class="text-center mb-4">Contacto</h2>
+
+  <form action="/enviar" method="POST" class="mx-auto" style="max-width: 600px;">
+    
+    <div class="mb-3">
+      <label class="form-label">Nombre</label>
+      <input type="text" class="form-control" name="nombre" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Correo electrónico</label>
+      <input type="email" class="form-control" name="email" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Mensaje</label>
+      <textarea class="form-control" rows="4" name="mensaje" required></textarea>
+    </div>
+
+    <button class="btn btn-primary w-100">Enviar</button>
+  </form>
+
+</section>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
