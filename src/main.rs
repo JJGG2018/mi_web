@@ -26,32 +26,60 @@ async fn recibir_formulario(Form(contacto): Form<Contacto>) -> Html<String> {
     let directorio = "data";
     let ruta = "data/contactos.json";
 
-    // Asegurarse de que la carpeta 'data' existe
-    if !Path::new(directorio).exists() {
-        fs::create_dir_all(directorio).await.unwrap();
+    // Intentar guardar el contacto (sin colapsar si falla el sistema de archivos)
+    let resultado_guardado = async {
+        // Asegurarse de que la carpeta 'data' existe
+        if !Path::new(directorio).exists() {
+            fs::create_dir_all(directorio).await?;
+        }
+        // Si el archivo no existe, créalo con []
+        if !Path::new(ruta).exists() {
+            fs::write(ruta, "[]").await?;
+        }
+
+        let contenido = fs::read_to_string(ruta)
+            .await
+            .unwrap_or_else(|_| "[]".to_string());
+        let mut lista: Vec<Contacto> = serde_json::from_str(&contenido).unwrap_or_default();
+        lista.push(contacto.clone());
+
+        let nuevo_json = serde_json::to_string_pretty(&lista)?;
+        fs::write(ruta, nuevo_json).await?;
+        Ok::<(), Box<dyn std::error::Error>>(())
     }
-    // Si el archivo no existe, créalo con []
-    if !Path::new(ruta).exists() {
-        fs::write(ruta, "[]").await.unwrap();
+    .await;
+
+    if let Err(e) = resultado_guardado {
+        eprintln!("Error guardando contacto: {}", e);
     }
 
-    // 1. Leer contenido actual (si falla la lectura, usamos una lista vacía en texto)
-    let contenido = fs::read_to_string(ruta)
-        .await
-        .unwrap_or_else(|_| "[]".to_string());
-
-    // 2. Intentar parsear el JSON. Si el archivo está vacío o mal formado, usamos una lista vacía.
-    let mut lista: Vec<Contacto> = serde_json::from_str(&contenido).unwrap_or_default();
-    // Añadir nuevo contacto
-    lista.push(contacto.clone());
-
-    // Guardar actualizado
-    let nuevo_json = serde_json::to_string_pretty(&lista).unwrap();
-    fs::write(ruta, nuevo_json).await.unwrap();
-
-    // Respuesta al usuario
+    // Respuesta visualmente atractiva (Bootstrap + Estilos)
     let html = format!(
-        "<h1>¡Gracias, {}!</h1><p>Tu mensaje ha sido guardado correctamente.</p>",
+        r#"
+        <!DOCTYPE html>
+        <html lang="es">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <title>Mensaje Recibido</title>
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+            <style>
+                body {{ background: #f8f9fa; height: 100vh; display: flex; align-items: center; justify-content: center; }}
+                .card {{ border: none; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); padding: 2rem; max-width: 500px; text-align: center; }}
+                .icon {{ font-size: 4rem; color: #198754; margin-bottom: 1rem; }}
+            </style>
+        </head>
+        <body>
+            <div class="card">
+                <div class="icon">✓</div>
+                <h1 class="display-6">¡Gracias, {}!</h1>
+                <p class="lead text-muted">Tu mensaje ha sido recibido correctamente. Te contactaré pronto.</p>
+                <hr>
+                <a href="/" class="btn btn-primary px-4 py-2">Volver al inicio</a>
+            </div>
+        </body>
+        </html>
+        "#,
         contacto.nombre
     );
 
